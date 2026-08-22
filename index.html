@@ -125,8 +125,21 @@
 <div class="container">
 
   <header>
-    <h1>ACE XAU V1 🧠</h1>
-    <p>XAUUSD Precision Analysis</p>
+  <h1>ACE XAU V1 🧠</h1>
+  <p>XAUUSD Precision Analysis</p>
+
+  <div style="margin-top:15px;">
+    <div style="color:#9aa4b2; font-size:13px;">
+      LIVE XAU/USD
+    </div>
+
+    <div id="livePrice" style="font-size:32px; font-weight:bold; margin-top:5px;">
+      Loading...
+    </div>
+
+    <div id="priceStatus" style="color:#9aa4b2; font-size:12px; margin-top:5px;">
+      Connecting to market data...
+  </div>
   </header>
 
   <div class="card">
@@ -286,6 +299,42 @@ function scanXAU() {
 }
 
 </script>
+      
+async function updateGoldPrice() {
+  const priceElement = document.getElementById("livePrice");
+  const statusElement = document.getElementById("priceStatus");
+
+  try {
+    const response = await fetch("https://xaus.com/api/v1/spot");
+
+    if (!response.ok) {
+      throw new Error("Market data unavailable");
+    }
+
+    const data = await response.json();
+
+    const price = data.price ?? data.xau?.usd ?? data.XAUUSD;
+
+    if (!price) {
+      throw new Error("Price not found");
+    }
+
+    priceElement.innerText =
+      "$" + Number(price).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+    statusElement.innerText = "LIVE • XAU/USD spot";
+  } catch (error) {
+    priceElement.innerText = "Unavailable";
+    statusElement.innerText = "Market data connection failed";
+  }
+}
+
+updateGoldPrice();
+setInterval(updateGoldPrice, 30000);
 
 </body>
+
 </html>
