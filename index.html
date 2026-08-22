@@ -306,6 +306,7 @@ async function updateGoldPrice() {
 
   try {
     const response = await fetch("https://xaus.com/api/v1/spot");
+      console.log("API STATUS:", response.status);
 
     if (!response.ok) {
       throw new Error("Market data unavailable");
@@ -313,6 +314,7 @@ async function updateGoldPrice() {
 
     const data = await response.json();
       console.log(data);
+      console.log("API DATA:", data);
 
     const price = data.spot_usd_oz;
 
