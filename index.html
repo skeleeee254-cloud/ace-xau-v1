@@ -4,9 +4,164 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ACE XAU V1</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0f14;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+    }
+
+    .header p {
+      color: #9aa4b2;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: #151b23;
+      border: 1px solid #252d38;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .bias {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .neutral {
+      color: #f5c542;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #252d38;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #9aa4b2;
+    }
+
+    .value {
+      font-weight: bold;
+    }
+
+    .button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #f5c542;
+      color: #0b0f14;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .footer {
+      text-align: center;
+      color: #687383;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>ACE XAU V1 🚀</h1>
-  <p>Your XAUUSD trading analysis assistant.</p>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>ACE XAU V1 🧠</h1>
+      <p>XAUUSD Precision Analysis</p>
+    </div>
+
+    <div class="card">
+      <h2>Market Bias</h2>
+      <div class="bias neutral">NEUTRAL</div>
+    </div>
+
+    <div class="card">
+      <h2>Trade Setup</h2>
+
+      <div class="row">
+        <span class="label">Instrument</span>
+        <span class="value">XAUUSD</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Timeframe</span>
+        <span class="value">M15 / M5</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Entry</span>
+        <span class="value">Waiting</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Stop Loss</span>
+        <span class="value">Waiting</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Take Profit</span>
+        <span class="value">Waiting</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ACE Verdict</h2>
+      <p>
+        No high-confidence setup detected.
+        Wait for confirmation before entering a trade.
+      </p>
+    </div>
+
+    <div class="card">
+      <button class="button" onclick="alert('ACE is scanning XAUUSD...')">
+        SCAN XAUUSD 🔎
+      </button>
+    </div>
+
+    <div class="footer">
+      ACE XAU V1 • Precision over prediction
+    </div>
+
+  </div>
+
 </body>
-</html>
+      </html>
