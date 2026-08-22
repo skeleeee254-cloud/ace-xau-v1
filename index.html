@@ -113,9 +113,49 @@
       <h2>Market Bias</h2>
       <div class="bias neutral">NEUTRAL</div>
     </div>
+    
+      <div class="card">
+  <h2>Trade Setup 🎯</h2>
 
-    <div class="card">
-      <h2>Trade Setup</h2>
+  <div class="row">
+    <span class="label">Instrument</span>
+    <span class="value">XAUUSD</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Direction</span>
+    <span class="value" id="tradeDirection">WAITING</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Entry Zone</span>
+    <span class="value" id="entryZone">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Stop Loss</span>
+    <span class="value" id="stopLoss">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Take Profit 1</span>
+    <span class="value" id="tp1">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Take Profit 2</span>
+    <span class="value" id="tp2">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Risk : Reward</span>
+    <span class="value" id="riskReward">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Setup Status</span>
+    <span class="value" id="setupStatus">WAITING</span>
+  </div>
 
       <div class="card">
   <h2>Market Bias</h2>
@@ -152,7 +192,6 @@
     <span class="label">M15</span>
     <span class="value" id="m15Bias">—</span>
   </div>
-      </div>
 
       <div class="row">
         <span class="label">Instrument</span>
@@ -177,11 +216,41 @@
       <div class="row">
         <span class="label">Take Profit</span>
         <span class="value">Waiting</span>
-      </div>
     </div>
 
-    <div class="card">
-      <h2>ACE Verdict</h2>
+      <div class="card">
+  <h2>ACE Verdict 🧠</h2>
+
+  <p id="aceVerdict">
+    No high-confidence setup detected.
+    Wait for confirmation before entering a trade.
+  </p>
+
+  <div class="row">
+    <span class="label">Confidence</span>
+    <span class="value" id="confidence">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Liquidity</span>
+    <span class="value" id="liquidity">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Structure</span>
+    <span class="value" id="structure">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Confirmation</span>
+    <span class="value" id="confirmation">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">Decision</span>
+    <span class="value" id="decision">WAIT</span>
+  </div>
+      </div>
       <p>
         No high-confidence setup detected.
         Wait for confirmation before entering a trade.
@@ -189,15 +258,19 @@
     </div>
 
     <div class="card">
-      <button class="button" onclick="document.getElementById('marketBias').textContent='WAITING';">
-      </button>
+  <button class="button" onclick="document.getElementById('marketBias').textContent='WAITING';">
+    SCAN XAUUSD 🔎
+  </button>
     </div>
+        
+        <p style="text-align:center; color:#9aa4b2; font-size:12px; margin-top:12px;">
+  ⚠️ ACE does not guarantee profits. Trade only when your setup is confirmed.
+    </p>
 
     <div class="footer">
       ACE XAU V1 • Precision over prediction
     </div>
 
-  </div>
 
   <script>
   function scanXAU() {
