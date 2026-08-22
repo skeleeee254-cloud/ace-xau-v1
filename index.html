@@ -314,7 +314,7 @@ async function updateGoldPrice() {
     const data = await response.json();
       console.log(data);
 
-    const price = data.price ?? data.xau?.usd ?? data.XAUUSD;
+    const price = data.spot_usd_oz;
 
     if (!price) {
       throw new Error("Price not found");
