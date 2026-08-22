@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+      <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,34 +9,33 @@
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #0b0f14;
-      color: #ffffff;
-      padding: 20px;
+      color: white;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
+      padding: 20px;
     }
 
-    .header {
+    header {
       text-align: center;
-      margin-bottom: 25px;
+      padding: 20px 0;
     }
 
-    .header h1 {
+    header h1 {
+      margin: 0;
       font-size: 32px;
     }
 
-    .header p {
+    header p {
       color: #9aa4b2;
-      margin-top: 8px;
     }
 
     .card {
@@ -46,24 +46,33 @@
       margin-bottom: 16px;
     }
 
-    .card h2 {
-      font-size: 18px;
-      margin-bottom: 15px;
+    h2 {
+      margin-top: 0;
+      font-size: 19px;
     }
 
     .bias {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: bold;
+      margin-bottom: 15px;
     }
 
     .neutral {
       color: #f5c542;
     }
 
+    .bullish {
+      color: #35d07f;
+    }
+
+    .bearish {
+      color: #ff5c5c;
+    }
+
     .row {
       display: flex;
       justify-content: space-between;
-      padding: 10px 0;
+      padding: 11px 0;
       border-bottom: 1px solid #252d38;
     }
 
@@ -79,9 +88,9 @@
       font-weight: bold;
     }
 
-    .button {
+    button {
       width: 100%;
-      padding: 15px;
+      padding: 16px;
       border: none;
       border-radius: 12px;
       background: #f5c542;
@@ -91,198 +100,192 @@
       cursor: pointer;
     }
 
-    .footer {
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .warning {
+      text-align: center;
+      color: #9aa4b2;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    footer {
       text-align: center;
       color: #687383;
       font-size: 12px;
-      margin-top: 25px;
+      padding: 15px;
     }
   </style>
-
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="header">
-      <h1>ACE XAU V1 🧠</h1>
-      <p>XAUUSD Precision Analysis</p>
+  <header>
+    <h1>ACE XAU V1 🧠</h1>
+    <p>XAUUSD Precision Analysis</p>
+  </header>
+
+  <div class="card">
+    <h2>Market Bias</h2>
+
+    <div id="marketBias" class="bias neutral">
+      NEUTRAL
     </div>
 
-    <div class="card">
-      <h2>Market Bias</h2>
-      <div class="bias neutral">NEUTRAL</div>
-    </div>
-    
-      <div class="card">
-  <h2>Trade Setup 🎯</h2>
-
-  <div class="row">
-    <span class="label">Instrument</span>
-    <span class="value">XAUUSD</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Direction</span>
-    <span class="value" id="tradeDirection">WAITING</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Entry Zone</span>
-    <span class="value" id="entryZone">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Stop Loss</span>
-    <span class="value" id="stopLoss">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Take Profit 1</span>
-    <span class="value" id="tp1">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Take Profit 2</span>
-    <span class="value" id="tp2">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Risk : Reward</span>
-    <span class="value" id="riskReward">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Setup Status</span>
-    <span class="value" id="setupStatus">WAITING</span>
-  </div>
-
-      <div class="card">
-  <h2>Market Bias</h2>
-
-  <div class="bias neutral" id="marketBias">
-    NEUTRAL
-  </div>
-
-  <p id="biasReason" style="color:#9aa4b2; margin-top:10px;">
-    Waiting for multi-timeframe confirmation.
-  </p>
-
-  <div class="row">
-    <span class="label">W1</span>
-    <span class="value" id="w1Bias">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">D1</span>
-    <span class="value" id="d1Bias">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">H4</span>
-    <span class="value" id="h4Bias">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">H1</span>
-    <span class="value" id="h1Bias">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">M15</span>
-    <span class="value" id="m15Bias">—</span>
-  </div>
-
-      <div class="row">
-        <span class="label">Instrument</span>
-        <span class="value">XAUUSD</span>
-      </div>
-
-      <div class="row">
-        <span class="label">Timeframe</span>
-        <span class="value">M15 / M5</span>
-      </div>
-
-      <div class="row">
-        <span class="label">Entry</span>
-        <span class="value">Waiting</span>
-      </div>
-
-      <div class="row">
-        <span class="label">Stop Loss</span>
-        <span class="value">Waiting</span>
-      </div>
-
-      <div class="row">
-        <span class="label">Take Profit</span>
-        <span class="value">Waiting</span>
-    </div>
-
-      <div class="card">
-  <h2>ACE Verdict 🧠</h2>
-
-  <p id="aceVerdict">
-    No high-confidence setup detected.
-    Wait for confirmation before entering a trade.
-  </p>
-
-  <div class="row">
-    <span class="label">Confidence</span>
-    <span class="value" id="confidence">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Liquidity</span>
-    <span class="value" id="liquidity">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Structure</span>
-    <span class="value" id="structure">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Confirmation</span>
-    <span class="value" id="confirmation">—</span>
-  </div>
-
-  <div class="row">
-    <span class="label">Decision</span>
-    <span class="value" id="decision">WAIT</span>
-  </div>
-        
-      <p>
-        No high-confidence setup detected.
-        Wait for confirmation before entering a trade.
-      </p>
-    </div>
-
-    <div class="card">
-  <button class="button" onclick="document.getElementById('marketBias').innerHTML='WAITING';">
-    </div>
-        
-        <p style="text-align:center; color:#9aa4b2; font-size:12px; margin-top:12px;">
-  ⚠️ ACE does not guarantee profits. Trade only when your setup is confirmed.
+    <p id="biasReason">
+      Waiting for multi-timeframe confirmation.
     </p>
 
-    <div class="footer">
-      ACE XAU V1 • Precision over prediction
+    <div class="row">
+      <span class="label">W1</span>
+      <span class="value" id="w1">—</span>
     </div>
 
-  <script>
-  function scanXAU() {
-    document.getElementById("marketBias").textContent = "WAITING";
-    document.getElementById("biasReason").textContent =
-      "ACE is waiting for confirmed market data.";
+    <div class="row">
+      <span class="label">D1</span>
+      <span class="value" id="d1">—</span>
+    </div>
 
-    document.getElementById("w1Bias").textContent = "—";
-    document.getElementById("d1Bias").textContent = "—";
-    document.getElementById("h4Bias").textContent = "—";
-    document.getElementById("h1Bias").textContent = "—";
-    document.getElementById("m15Bias").textContent = "—";
-  }
-  </script>
+    <div class="row">
+      <span class="label">H4</span>
+      <span class="value" id="h4">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">H1</span>
+      <span class="value" id="h1">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">M15</span>
+      <span class="value" id="m15">—</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Trade Setup 🎯</h2>
+
+    <div class="row">
+      <span class="label">Instrument</span>
+      <span class="value">XAUUSD</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Direction</span>
+      <span class="value" id="direction">WAITING</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Entry Zone</span>
+      <span class="value" id="entry">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Stop Loss</span>
+      <span class="value" id="sl">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Take Profit 1</span>
+      <span class="value" id="tp1">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Take Profit 2</span>
+      <span class="value" id="tp2">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Risk : Reward</span>
+      <span class="value" id="rr">—</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>ACE Verdict 🧠</h2>
+
+    <p id="verdict">
+      No high-confidence setup detected.
+      Wait for confirmation before entering a trade.
+    </p>
+
+    <div class="row">
+      <span class="label">Confidence</span>
+      <span class="value" id="confidence">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Liquidity</span>
+      <span class="value" id="liquidity">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Structure</span>
+      <span class="value" id="structure">—</span>
+    </div>
+
+    <div class="row">
+      <span class="label">Decision</span>
+      <span class="value" id="decision">WAIT</span>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <button onclick="scanXAU()">
+      SCAN XAUUSD 🔎
+    </button>
+
+    <div class="warning">
+      ⚠️ ACE does not guarantee profits. Trade only when your setup is confirmed.
+    </div>
+
+  </div>
+
+  <footer>
+    ACE XAU V1 • Precision over prediction
+  </footer>
+
+</div>
+
+<script>
+
+function scanXAU() {
+
+  document.getElementById("marketBias").innerText = "BULLISH";
+  document.getElementById("marketBias").className = "bias bullish";
+
+  document.getElementById("biasReason").innerText =
+    "Bullish confirmation detected across the current test structure.";
+
+  document.getElementById("w1").innerText = "BULLISH";
+  document.getElementById("d1").innerText = "BULLISH";
+  document.getElementById("h4").innerText = "BULLISH";
+  document.getElementById("h1").innerText = "BULLISH";
+  document.getElementById("m15").innerText = "BULLISH";
+
+  document.getElementById("direction").innerText = "BUY";
+
+  document.getElementById("entry").innerText = "WAIT";
+  document.getElementById("sl").innerText = "WAIT";
+  document.getElementById("tp1").innerText = "WAIT";
+  document.getElementById("tp2").innerText = "WAIT";
+  document.getElementById("rr").innerText = "1 : 2+";
+
+  document.getElementById("verdict").innerText =
+    "Test scan successful. ACE is ready for real market-data integration.";
+
+  document.getElementById("confidence").innerText = "TEST";
+  document.getElementById("liquidity").innerText = "CHECK";
+  document.getElementById("structure").innerText = "BULLISH";
+  document.getElementById("decision").innerText = "BUY BIAS";
+}
+
+</script>
 
 </body>
-      </html>
+</html>
