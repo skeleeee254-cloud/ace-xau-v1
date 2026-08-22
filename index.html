@@ -117,6 +117,43 @@
     <div class="card">
       <h2>Trade Setup</h2>
 
+      <div class="card">
+  <h2>Market Bias</h2>
+
+  <div class="bias neutral" id="marketBias">
+    NEUTRAL
+  </div>
+
+  <p id="biasReason" style="color:#9aa4b2; margin-top:10px;">
+    Waiting for multi-timeframe confirmation.
+  </p>
+
+  <div class="row">
+    <span class="label">W1</span>
+    <span class="value" id="w1Bias">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">D1</span>
+    <span class="value" id="d1Bias">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">H4</span>
+    <span class="value" id="h4Bias">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">H1</span>
+    <span class="value" id="h1Bias">—</span>
+  </div>
+
+  <div class="row">
+    <span class="label">M15</span>
+    <span class="value" id="m15Bias">—</span>
+  </div>
+      </div>
+
       <div class="row">
         <span class="label">Instrument</span>
         <span class="value">XAUUSD</span>
@@ -152,7 +189,7 @@
     </div>
 
     <div class="card">
-      <button class="button" onclick="alert('ACE is scanning XAUUSD...')">
+      <button class="button" onclick="scanXAU()">
         SCAN XAUUSD 🔎
       </button>
     </div>
@@ -162,6 +199,20 @@
     </div>
 
   </div>
+
+  <script>
+  function scanXAU() {
+    document.getElementById("marketBias").textContent = "WAITING";
+    document.getElementById("biasReason").textContent =
+      "ACE is waiting for confirmed market data.";
+
+    document.getElementById("w1Bias").textContent = "—";
+    document.getElementById("d1Bias").textContent = "—";
+    document.getElementById("h4Bias").textContent = "—";
+    document.getElementById("h1Bias").textContent = "—";
+    document.getElementById("m15Bias").textContent = "—";
+  }
+  </script>
 
 </body>
       </html>
