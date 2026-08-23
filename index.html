@@ -344,6 +344,47 @@ function scanXAU() {
     document.getElementById("decision").innerText = "BUY BIAS";
   }
 
+      <script>
+
+  // =====================================
+  // ACE XAU V1 — CORE ENGINE
+  // =====================================
+
+  // -------------------------------------
+  // TEST SCANNER
+  // -------------------------------------
+
+  function scanXAU() {
+
+    document.getElementById("marketBias").innerText = "BULLISH";
+    document.getElementById("marketBias").className = "bias bullish";
+
+    document.getElementById("biasReason").innerText =
+      "Test scan successful. Real market analysis will be added next.";
+
+    document.getElementById("w1").innerText = "BULLISH";
+    document.getElementById("d1").innerText = "BULLISH";
+    document.getElementById("h4").innerText = "BULLISH";
+    document.getElementById("h1").innerText = "BULLISH";
+    document.getElementById("m15").innerText = "BULLISH";
+
+    document.getElementById("direction").innerText = "BUY";
+
+    document.getElementById("entry").innerText = "WAIT";
+    document.getElementById("sl").innerText = "WAIT";
+    document.getElementById("tp1").innerText = "WAIT";
+    document.getElementById("tp2").innerText = "WAIT";
+    document.getElementById("rr").innerText = "1 : 2+";
+
+    document.getElementById("verdict").innerText =
+      "Test scan successful. ACE interface is working.";
+
+    document.getElementById("confidence").innerText = "TEST";
+    document.getElementById("liquidity").innerText = "CHECK";
+    document.getElementById("structure").innerText = "BULLISH";
+    document.getElementById("decision").innerText = "BUY BIAS";
+  }
+
 
   // -------------------------------------
   // LIVE XAU/USD PRICE
@@ -403,9 +444,8 @@ function scanXAU() {
         "Market data error: " +
         error.message;
     }
-  }
 
-
+        
   // -------------------------------------
   // START ACE WHEN PAGE LOADS
   // -------------------------------------
