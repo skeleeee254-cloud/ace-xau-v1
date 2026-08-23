@@ -330,9 +330,8 @@ async function updateGoldPrice() {
 
     statusElement.innerText = "LIVE • XAU/USD spot";
   } catch (error) {
-    priceElement.innerText = "Unavailable";
-    statusElement.innerText = "Market data connection failed";
-  }
+  priceElement.innerText = "ERROR";
+  statusElement.innerText = error.message;
 }
 
 updateGoldPrice();
