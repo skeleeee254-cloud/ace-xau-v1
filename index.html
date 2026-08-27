@@ -1,473 +1,434 @@
-
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ACE XAU V1</title>
+
+  <title>ACE XAU V1 | Live Gold Market Intelligence</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0f14;
-      color: white;
+    :root {
+      --bg: #0a0d12;
+      --panel: #111722;
+      --panel-2: #171e2b;
+      --text: #f4f7fb;
+      --muted: #8f9bad;
+      --green: #39d98a;
+      --red: #ff5c77;
+      --gold: #f7c948;
+      --blue: #5b8cff;
+      --border: #273244;
     }
 
-    .container {
-      max-width: 650px;
-      margin: auto;
-      padding: 20px;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
     }
 
     header {
-      text-align: center;
-      padding: 20px 0;
+      padding: 22px 18px;
+      border-bottom: 1px solid var(--border);
+      background: #0d1118;
     }
 
-    header h1 {
+    .header-row {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    h1 {
       margin: 0;
-      font-size: 32px;
+      font-size: 1.4rem;
     }
 
-    header p {
-      color: #9aa4b2;
+    .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .dot.online {
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
     .card {
-      background: #151b23;
-      border: 1px solid #252d38;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 19px;
-    }
-
-    .bias {
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .neutral {
-      color: #f5c542;
-    }
-
-    .bullish {
-      color: #35d07f;
-    }
-
-    .bearish {
-      color: #ff5c5c;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      padding: 11px 0;
-      border-bottom: 1px solid #252d38;
-    }
-
-    .row:last-child {
-      border-bottom: none;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
     }
 
     .label {
-      color: #9aa4b2;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .value {
-      font-weight: bold;
+      margin-top: 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
     }
 
-    button {
+    .price {
+      color: var(--gold);
+    }
+
+    .bull {
+      color: var(--green);
+    }
+
+    .bear {
+      color: var(--red);
+    }
+
+    .neutral {
+      color: var(--gold);
+    }
+
+    .chart-card {
+      margin-bottom: 18px;
+    }
+
+    #chart {
+      height: 420px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #chartCanvas {
       width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 12px;
-      background: #f5c542;
-      color: #0b0f14;
-      font-size: 16px;
-      font-weight: bold;
+      height: 100%;
+      display: block;
+      background: #0d121b;
+      border-radius: 10px;
+    }
+
+    .timeframes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tf-btn,
+    button {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 9px;
+      padding: 9px 12px;
       cursor: pointer;
+      font-weight: 700;
     }
 
-    button:active {
-      transform: scale(0.98);
+    .tf-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
     }
 
-    .warning {
-      text-align: center;
-      color: #9aa4b2;
-      font-size: 12px;
-      margin-top: 12px;
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    footer {
-      text-align: center;
-      color: #687383;
-      font-size: 12px;
-      padding: 15px;
+    .scan-btn {
+      background: var(--gold);
+      color: #121212;
+      border: none;
+    }
+
+    .trade-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 18px;
+    }
+
+    .verdict {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin: 12px 0 6px;
+    }
+
+    .verdict-note {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .trade-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .trade-box {
+      background: var(--panel-2);
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    .trade-box strong {
+      display: block;
+      margin-top: 6px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .log {
+      max-height: 250px;
+      overflow-y: auto;
+      background: #090c11;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: #aeb9c9;
+    }
+
+    @media (max-width: 850px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trade-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #chart {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .header-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .value {
+        font-size: 1.1rem;
+      }
+
+      main {
+        padding: 12px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <header>
-  <h1>ACE XAU V1 🧠</h1>
-  <p>XAUUSD Precision Analysis</p>
-
-  <div style="margin-top:15px;">
-    <div style="color:#9aa4b2; font-size:13px;">
-      LIVE XAU/USD
+<header>
+  <div class="header-row">
+    <div>
+      <h1>ACE XAU V1 🧠</h1>
+      <div class="sub">Live XAUUSD Market Intelligence • Deriv Data Feed</div>
     </div>
 
-    <div id="livePrice" style="font-size:32px; font-weight:bold; margin-top:5px;">
-      Loading...
-    </div>
-
-    <div id="priceStatus" style="color:#9aa4b2; font-size:12px; margin-top:5px;">
-      Connecting to market data...
+    <div class="status">
+      <span id="connectionDot" class="dot"></span>
+      <span id="connectionStatus">Connecting to Deriv...</span>
     </div>
   </div>
-  </header>
+</header>
 
-  <div class="card">
-    <h2>Market Bias</h2>
+<main>
 
-    <div id="marketBias" class="bias neutral">
-      NEUTRAL
+  <div class="grid">
+    <div class="card">
+      <div class="label">XAUUSD Live Price</div>
+      <div id="livePrice" class="value price">Waiting...</div>
     </div>
 
-    <p id="biasReason">
-      Waiting for multi-timeframe confirmation.
-    </p>
-
-    <div class="row">
-      <span class="label">W1</span>
-      <span class="value" id="w1">—</span>
+    <div class="card">
+      <div class="label">Market Bias</div>
+      <div id="bias" class="value neutral">WAITING</div>
     </div>
 
-    <div class="row">
-      <span class="label">D1</span>
-      <span class="value" id="d1">—</span>
+    <div class="card">
+      <div class="label">Live Timeframe</div>
+      <div id="activeTf" class="value">M5</div>
     </div>
 
-    <div class="row">
-      <span class="label">H4</span>
-      <span class="value" id="h4">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">H1</span>
-      <span class="value" id="h1">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">M15</span>
-      <span class="value" id="m15">—</span>
+    <div class="card">
+      <div class="label">Signal Confidence</div>
+      <div id="confidence" class="value neutral">0%</div>
     </div>
   </div>
 
-  <div class="card">
-    <h2>Trade Setup 🎯</h2>
-
-    <div class="row">
-      <span class="label">Instrument</span>
-      <span class="value">XAUUSD</span>
+  <div class="card chart-card">
+    <div class="timeframes">
+      <button class="tf-btn" data-tf="M1">M1</button>
+      <button class="tf-btn active" data-tf="M5">M5</button>
+      <button class="tf-btn" data-tf="M15">M15</button>
+      <button class="tf-btn" data-tf="H1">H1</button>
+      <button class="tf-btn" data-tf="H4">H4</button>
+      <button class="tf-btn" data-tf="D1">D1</button>
+      <button class="tf-btn" data-tf="W1">W1</button>
     </div>
 
-    <div class="row">
-      <span class="label">Direction</span>
-      <span class="value" id="direction">WAITING</span>
+    <div id="chart">
+      <canvas id="chartCanvas"></canvas>
     </div>
 
-    <div class="row">
-      <span class="label">Entry Zone</span>
-      <span class="value" id="entry">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Stop Loss</span>
-      <span class="value" id="sl">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Take Profit 1</span>
-      <span class="value" id="tp1">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Take Profit 2</span>
-      <span class="value" id="tp2">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Risk : Reward</span>
-      <span class="value" id="rr">—</span>
+    <div class="small" style="margin-top:10px">
+      Live candles are built from the incoming Deriv XAUUSD tick stream.
     </div>
   </div>
 
-  <div class="card">
-    <h2>ACE Verdict 🧠</h2>
-
-    <p id="verdict">
-      No high-confidence setup detected.
-      Wait for confirmation before entering a trade.
-    </p>
-
-    <div class="row">
-      <span class="label">Confidence</span>
-      <span class="value" id="confidence">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Liquidity</span>
-      <span class="value" id="liquidity">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Structure</span>
-      <span class="value" id="structure">—</span>
-    </div>
-
-    <div class="row">
-      <span class="label">Decision</span>
-      <span class="value" id="decision">WAIT</span>
-    </div>
+  <div class="controls">
+    <button id="scanBtn" class="scan-btn">SCAN XAUUSD 🔎</button>
+    <button id="reconnectBtn">RECONNECT DATA</button>
   </div>
 
-  <div class="card">
+  <div class="trade-grid">
 
-    <button onclick="scanXAU()">
-      SCAN XAUUSD 🔎
-    </button>
+    <div class="card">
+      <div class="label">ACE Verdict 🧠</div>
 
-    <div class="warning">
-      ⚠️ ACE does not guarantee profits. Trade only when your setup is confirmed.
+      <div id="verdict" class="verdict neutral">WAITING FOR MARKET DATA</div>
+
+      <div id="verdictNote" class="verdict-note">
+        ACE is waiting for the live XAUUSD market feed before analyzing structure.
+      </div>
+
+      <div class="trade-row">
+        <div class="trade-box">
+          <div class="label">Entry</div>
+          <strong id="entry">—</strong>
+        </div>
+
+        <div class="trade-box">
+          <div class="label">Stop Loss</div>
+          <strong id="sl">—</strong>
+        </div>
+
+        <div class="trade-box">
+          <div class="label">Take Profit</div>
+          <strong id="tp">—</strong>
+        </div>
+
+        <div class="trade-box">
+          <div class="label">Risk : Reward</div>
+          <strong id="rr">—</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">ACE Data Log</div>
+      <div id="log" class="log"></div>
     </div>
 
   </div>
 
-  <footer>
-    ACE XAU V1 • Precision over prediction
-  </footer>
-
-</div>
+</main>
 
 <script>
-      document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("priceStatus").innerText =
-    "ACE ENGINE STARTED";
-});
+  /*
+    ACE XAU V1 — PHASE 1
+    Public market data only.
+    No trading credentials are used or stored in this frontend.
+  */
 
-function scanXAU() {
+  const DERIV_APP_ID = "1089";
 
-  document.getElementById("marketBias").innerText = "BULLISH";
-  document.getElementById("marketBias").className = "bias bullish";
+  const socketUrl =
+    "wss://ws.derivws.com/websockets/v3?app_id=" + DERIV_APP_ID;
 
-  document.getElementById("biasReason").innerText =
-    "Bullish confirmation detected across the current test structure.";
+  let ws = null;
+  let activeTimeframe = "M5";
+  let lastPrice = null;
 
-  document.getElementById("w1").innerText = "BULLISH";
-  document.getElementById("d1").innerText = "BULLISH";
-  document.getElementById("h4").innerText = "BULLISH";
-  document.getElementById("h1").innerText = "BULLISH";
-  document.getElementById("m15").innerText = "BULLISH";
+  const ticks = [];
+  const candles = {
+    M1: [],
+    M5: [],
+    M15: [],
+    H1: [],
+    H4: [],
+    D1: [],
+    W1: []
+  };
 
-  document.getElementById("direction").innerText = "BUY";
+  const timeframeSeconds = {
+    M1: 60,
+    M5: 300,
+    M15: 900,
+    H1: 3600,
+    H4: 14400,
+    D1: 86400,
+    W1: 604800
+  };
 
-  document.getElementById("entry").innerText = "WAIT";
-  document.getElementById("sl").innerText = "WAIT";
-  document.getElementById("tp1").innerText = "WAIT";
-  document.getElementById("tp2").innerText = "WAIT";
-  document.getElementById("rr").innerText = "1 : 2+";
+  const livePriceEl = document.getElementById("livePrice");
+  const connectionDot = document.getElementById("connectionDot");
+  const connectionStatus = document.getElementById("connectionStatus");
+  const biasEl = document.getElementById("bias");
+  const activeTfEl = document.getElementById("activeTf");
+  const confidenceEl = document.getElementById("confidence");
+  const verdictEl = document.getElementById("verdict");
+  const verdictNoteEl = document.getElementById("verdictNote");
+  const logEl = document.getElementById("log");
 
-  document.getElementById("verdict").innerText =
-    "Test scan successful. ACE is ready for real market-data integration.";
-
-  document.getElementById("confidence").innerText = "TEST";
-  document.getElementById("liquidity").innerText = "CHECK";
-  document.getElementById("structure").innerText = "BULLISH";
-  document.getElementById("decision").innerText = "BUY BIAS";
-}
-
-      <script>
-
-  // =====================================
-  // ACE XAU V1 — CORE ENGINE
-  // =====================================
-
-  // -------------------------------------
-  // TEST SCANNER
-  // -------------------------------------
-
-  function scanXAU() {
-
-    document.getElementById("marketBias").innerText = "BULLISH";
-    document.getElementById("marketBias").className = "bias bullish";
-
-    document.getElementById("biasReason").innerText =
-      "Test scan successful. Real market analysis will be added next.";
-
-    document.getElementById("w1").innerText = "BULLISH";
-    document.getElementById("d1").innerText = "BULLISH";
-    document.getElementById("h4").innerText = "BULLISH";
-    document.getElementById("h1").innerText = "BULLISH";
-    document.getElementById("m15").innerText = "BULLISH";
-
-    document.getElementById("direction").innerText = "BUY";
-
-    document.getElementById("entry").innerText = "WAIT";
-    document.getElementById("sl").innerText = "WAIT";
-    document.getElementById("tp1").innerText = "WAIT";
-    document.getElementById("tp2").innerText = "WAIT";
-    document.getElementById("rr").innerText = "1 : 2+";
-
-    document.getElementById("verdict").innerText =
-      "Test scan successful. ACE interface is working.";
-
-    document.getElementById("confidence").innerText = "TEST";
-    document.getElementById("liquidity").innerText = "CHECK";
-    document.getElementById("structure").innerText = "BULLISH";
-    document.getElementById("decision").innerText = "BUY BIAS";
+  function addLog(message) {
+    const now = new Date().toLocaleTimeString();
+    logEl.innerHTML =
+      `<div>[${now}] ${message}</div>` + logEl.innerHTML;
   }
 
-      <script>
-
-  // =====================================
-  // ACE XAU V1 — CORE ENGINE
-  // =====================================
-
-  // -------------------------------------
-  // TEST SCANNER
-  // -------------------------------------
-
-  function scanXAU() {
-
-    document.getElementById("marketBias").innerText = "BULLISH";
-    document.getElementById("marketBias").className = "bias bullish";
-
-    document.getElementById("biasReason").innerText =
-      "Test scan successful. Real market analysis will be added next.";
-
-    document.getElementById("w1").innerText = "BULLISH";
-    document.getElementById("d1").innerText = "BULLISH";
-    document.getElementById("h4").innerText = "BULLISH";
-    document.getElementById("h1").innerText = "BULLISH";
-    document.getElementById("m15").innerText = "BULLISH";
-
-    document.getElementById("direction").innerText = "BUY";
-
-    document.getElementById("entry").innerText = "WAIT";
-    document.getElementById("sl").innerText = "WAIT";
-    document.getElementById("tp1").innerText = "WAIT";
-    document.getElementById("tp2").innerText = "WAIT";
-    document.getElementById("rr").innerText = "1 : 2+";
-
-    document.getElementById("verdict").innerText =
-      "Test scan successful. ACE interface is working.";
-
-    document.getElementById("confidence").innerText = "TEST";
-    document.getElementById("liquidity").innerText = "CHECK";
-    document.getElementById("structure").innerText = "BULLISH";
-    document.getElementById("decision").innerText = "BUY BIAS";
-  }
-
-
-  // -------------------------------------
-  // LIVE XAU/USD PRICE
-  // -------------------------------------
-
-  async function updateGoldPrice() {
-
-    const priceElement =
-      document.getElementById("livePrice");
-
-    const statusElement =
-      document.getElementById("priceStatus");
-
-    priceElement.innerText = "CONNECTING...";
-    statusElement.innerText =
-      "Requesting XAU/USD market data...";
-
-    try {
-
-      const response =
-        await fetch("https://xaus.com/api/v1/spot");
-
-      if (!response.ok) {
-        throw new Error(
-          "Market data unavailable"
-        );
-      }
-
-      const data =
-        await response.json();
-
-      const price =
-        Number(data.spot_usd_oz);
-
-      if (!Number.isFinite(price)) {
-        throw new Error(
-          "Invalid price received"
-        );
-      }
-
-      priceElement.innerText =
-        "$" +
-        price.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
-
-      statusElement.innerText =
-        "LIVE • XAU/USD spot";
-
-    } catch (error) {
-
-      priceElement.innerText =
-        "UNAVAILABLE";
-
-      statusElement.innerText =
-        "Market data error: " +
-        error.message;
-    }
-
-        
-  // -------------------------------------
-  // START ACE WHEN PAGE LOADS
-  // -------------------------------------
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-      document.getElementById("priceStatus").innerText =
-        "ACE ENGINE STARTED";
-
-      updateGoldPrice();
-
-      setInterval(
-        updateGoldPrice,
-        30000
-      );
-
-    }
-  );
-
-</script>
-
-</body>
-</html>
+  function setConnection(status) {
+    if (status === "online") {
+      connectionDot.classList.add("online
