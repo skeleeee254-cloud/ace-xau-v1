@@ -1,434 +1,1228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ACE XAU V1</title>
 
-  <title>ACE XAU V1 | Live Gold Market Intelligence</title>
+<style>
+*{box-sizing:border-box}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body{
+  margin:0;
+  background:#080b10;
+  color:#f5f7fa;
+  font-family:Arial,sans-serif;
+}
 
-    :root {
-      --bg: #0a0d12;
-      --panel: #111722;
-      --panel-2: #171e2b;
-      --text: #f4f7fb;
-      --muted: #8f9bad;
-      --green: #39d98a;
-      --red: #ff5c77;
-      --gold: #f7c948;
-      --blue: #5b8cff;
-      --border: #273244;
-    }
+header{
+  padding:20px;
+  background:#0e131b;
+  border-bottom:1px solid #273142;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
-    }
+.header{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    header {
-      padding: 22px 18px;
-      border-bottom: 1px solid var(--border);
-      background: #0d1118;
-    }
+h1{margin:0;font-size:24px}
+.sub{color:#8994a5;font-size:13px;margin-top:5px}
 
-    .header-row {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+.status{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 1.4rem;
-    }
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#ff536d;
+}
 
-    .sub {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
+.dot.online{
+  background:#39dc8a;
+  box-shadow:0 0 12px #39dc8a;
+}
 
-    .status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      white-space: nowrap;
-    }
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:18px;
+}
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--red);
-    }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
 
-    .dot.online {
-      background: var(--green);
-      box-shadow: 0 0 12px var(--green);
-    }
+.card{
+  background:#111722;
+  border:1px solid #273142;
+  border-radius:14px;
+  padding:16px;
+}
 
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 18px;
-    }
+.label{
+  color:#8994a5;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
-    }
+.value{
+  margin-top:8px;
+  font-size:22px;
+  font-weight:bold;
+}
 
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-    }
+.price{color:#f7c948}
+.green{color:#39dc8a}
+.red{color:#ff536d}
+.yellow{color:#f7c948}
 
-    .label {
-      color: var(--muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+.chart-card{
+  margin-top:16px;
+}
 
-    .value {
-      margin-top: 8px;
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
+.timeframes{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
 
-    .price {
-      color: var(--gold);
-    }
+button{
+  padding:9px 13px;
+  border-radius:8px;
+  border:1px solid #2a3547;
+  background:#171e2a;
+  color:#fff;
+  font-weight:bold;
+}
 
-    .bull {
-      color: var(--green);
-    }
+button.active{
+  background:#4f7cff;
+  border-color:#4f7cff;
+}
 
-    .bear {
-      color: var(--red);
-    }
+#chart{
+  height:420px;
+}
 
-    .neutral {
-      color: var(--gold);
-    }
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  background:#0b1017;
+  border-radius:10px;
+}
 
-    .chart-card {
-      margin-bottom: 18px;
-    }
+.controls{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
 
-    #chart {
-      height: 420px;
-      position: relative;
-      overflow: hidden;
-    }
+.scan{
+  background:#f7c948;
+  color:#111;
+  border:0;
+}
 
-    #chartCanvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      background: #0d121b;
-      border-radius: 10px;
-    }
+.analysis{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:16px;
+  margin-top:16px;
+}
 
-    .timeframes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
+.verdict{
+  font-size:28px;
+  font-weight:bold;
+  margin-top:12px;
+}
 
-    .tf-btn,
-    button {
-      border: 1px solid var(--border);
-      background: var(--panel-2);
-      color: var(--text);
-      border-radius: 9px;
-      padding: 9px 12px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+.note{
+  color:#9aa5b6;
+  line-height:1.5;
+  margin-top:8px;
+}
 
-    .tf-btn.active {
-      background: var(--blue);
-      border-color: var(--blue);
-    }
+.trade-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
+}
 
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+.trade-box{
+  background:#171e2a;
+  padding:12px;
+  border-radius:9px;
+}
 
-    .scan-btn {
-      background: var(--gold);
-      color: #121212;
-      border: none;
-    }
+.trade-box strong{
+  display:block;
+  margin-top:6px;
+}
 
-    .trade-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-    }
+.log{
+  height:260px;
+  overflow:auto;
+  background:#080b10;
+  border-radius:9px;
+  padding:10px;
+  font-family:monospace;
+  font-size:12px;
+  color:#aab5c5;
+}
 
-    .verdict {
-      font-size: 1.7rem;
-      font-weight: 800;
-      margin: 12px 0 6px;
-    }
+@media(max-width:800px){
+  .cards{grid-template-columns:1fr 1fr}
+  .analysis{grid-template-columns:1fr}
+}
 
-    .verdict-note {
-      color: var(--muted);
-      line-height: 1.5;
-    }
+@media(max-width:500px){
+  .header{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:12px;
+  }
 
-    .trade-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .trade-box {
-      background: var(--panel-2);
-      padding: 12px;
-      border-radius: 10px;
-    }
-
-    .trade-box strong {
-      display: block;
-      margin-top: 6px;
-    }
-
-    .small {
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
-    .log {
-      max-height: 250px;
-      overflow-y: auto;
-      background: #090c11;
-      border-radius: 10px;
-      padding: 12px;
-      font-family: monospace;
-      font-size: 0.78rem;
-      color: #aeb9c9;
-    }
-
-    @media (max-width: 850px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .trade-grid {
-        grid-template-columns: 1fr;
-      }
-
-      #chart {
-        height: 320px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .header-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .value {
-        font-size: 1.1rem;
-      }
-
-      main {
-        padding: 12px;
-      }
-    }
-  </style>
+  #chart{height:320px}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-row">
+  <div class="header">
     <div>
       <h1>ACE XAU V1 🧠</h1>
-      <div class="sub">Live XAUUSD Market Intelligence • Deriv Data Feed</div>
+      <div class="sub">Live XAUUSD Market Intelligence</div>
     </div>
 
     <div class="status">
-      <span id="connectionDot" class="dot"></span>
-      <span id="connectionStatus">Connecting to Deriv...</span>
+      <span id="dot" class="dot"></span>
+      <span id="status">Connecting to Deriv...</span>
     </div>
   </div>
 </header>
 
 <main>
 
-  <div class="grid">
-    <div class="card">
-      <div class="label">XAUUSD Live Price</div>
-      <div id="livePrice" class="value price">Waiting...</div>
-    </div>
+<div class="cards">
 
-    <div class="card">
-      <div class="label">Market Bias</div>
-      <div id="bias" class="value neutral">WAITING</div>
-    </div>
-
-    <div class="card">
-      <div class="label">Live Timeframe</div>
-      <div id="activeTf" class="value">M5</div>
-    </div>
-
-    <div class="card">
-      <div class="label">Signal Confidence</div>
-      <div id="confidence" class="value neutral">0%</div>
-    </div>
+  <div class="card">
+    <div class="label">XAUUSD Live Price</div>
+    <div id="price" class="value price">Loading...</div>
   </div>
 
-  <div class="card chart-card">
-    <div class="timeframes">
-      <button class="tf-btn" data-tf="M1">M1</button>
-      <button class="tf-btn active" data-tf="M5">M5</button>
-      <button class="tf-btn" data-tf="M15">M15</button>
-      <button class="tf-btn" data-tf="H1">H1</button>
-      <button class="tf-btn" data-tf="H4">H4</button>
-      <button class="tf-btn" data-tf="D1">D1</button>
-      <button class="tf-btn" data-tf="W1">W1</button>
-    </div>
-
-    <div id="chart">
-      <canvas id="chartCanvas"></canvas>
-    </div>
-
-    <div class="small" style="margin-top:10px">
-      Live candles are built from the incoming Deriv XAUUSD tick stream.
-    </div>
+  <div class="card">
+    <div class="label">Market Bias</div>
+    <div id="bias" class="value yellow">WAIT</div>
   </div>
 
-  <div class="controls">
-    <button id="scanBtn" class="scan-btn">SCAN XAUUSD 🔎</button>
-    <button id="reconnectBtn">RECONNECT DATA</button>
+  <div class="card">
+    <div class="label">Timeframe</div>
+    <div id="tfDisplay" class="value">M5</div>
   </div>
 
-  <div class="trade-grid">
+  <div class="card">
+    <div class="label">Connection</div>
+    <div id="connection" class="value yellow">OFFLINE</div>
+  </div>
 
-    <div class="card">
-      <div class="label">ACE Verdict 🧠</div>
+</div>
 
-      <div id="verdict" class="verdict neutral">WAITING FOR MARKET DATA</div>
+<div class="card chart-card">
 
-      <div id="verdictNote" class="verdict-note">
-        ACE is waiting for the live XAUUSD market feed before analyzing structure.
+  <div class="timeframes">
+    <button data-tf="M1">M1</button>
+    <button data-tf="M5" class="active">M5</button>
+    <button data-tf="M15">M15</button>
+    <button data-tf="H1">H1</button>
+    <button data-tf="H4">H4</button>
+    <button data-tf="D1">D1</button>
+    <button data-tf="W1">W1</button>
+  </div>
+
+  <div id="chart">
+    <canvas id="canvas"></canvas>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button class="scan" id="scan">SCAN XAUUSD 🔎</button>
+  <button id="reconnect">RECONNECT DERIV</button>
+</div>
+
+<div class="analysis">
+
+  <div class="card">
+
+    <div class="label">ACE Verdict</div>
+
+    <div id="verdict" class="verdict yellow">
+      WAITING FOR DATA
+    </div>
+
+    <div id="note" class="note">
+      ACE will not generate a trade until live XAUUSD market data is received.
+    </div>
+
+    <div class="trade-grid">
+
+      <div class="trade-box">
+        <div class="label">Entry</div>
+        <strong id="entry">—</strong>
       </div>
 
-      <div class="trade-row">
-        <div class="trade-box">
-          <div class="label">Entry</div>
-          <strong id="entry">—</strong>
-        </div>
-
-        <div class="trade-box">
-          <div class="label">Stop Loss</div>
-          <strong id="sl">—</strong>
-        </div>
-
-        <div class="trade-box">
-          <div class="label">Take Profit</div>
-          <strong id="tp">—</strong>
-        </div>
-
-        <div class="trade-box">
-          <div class="label">Risk : Reward</div>
-          <strong id="rr">—</strong>
-        </div>
+      <div class="trade-box">
+        <div class="label">Stop Loss</div>
+        <strong id="sl">—</strong>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="label">ACE Data Log</div>
-      <div id="log" class="log"></div>
+      <div class="trade-box">
+        <div class="label">Take Profit</div>
+        <strong id="tp">—</strong>
+      </div>
+
+      <div class="trade-box">
+        <div class="label">Risk : Reward</div>
+        <strong id="rr">—</strong>
+      </div>
+
     </div>
 
   </div>
+
+  <div class="card">
+
+    <div class="label">ACE System Log</div>
+
+    <div id="log" class="log"></div>
+
+  </div>
+
+</div>
 
 </main>
 
 <script>
-  /*
-    ACE XAU V1 — PHASE 1
-    Public market data only.
-    No trading credentials are used or stored in this frontend.
-  */
 
-  const DERIV_APP_ID = "1089";
+/* =========================================================
+   ACE XAU V1
+   PHASE 1 — DERIV PUBLIC MARKET DATA
+   ========================================================= */
 
-  const socketUrl =
-    "wss://ws.derivws.com/websockets/v3?app_id=" + DERIV_APP_ID;
+const DERIV_WS =
+  "wss://api.derivws.com/trading/v1/options/ws/public";
 
-  let ws = null;
-  let activeTimeframe = "M5";
-  let lastPrice = null;
+let socket = null;
+let selectedTF = "M5";
+let goldSymbol = null;
+let lastPrice = null;
 
-  const ticks = [];
-  const candles = {
-    M1: [],
-    M5: [],
-    M15: [],
-    H1: [],
-    H4: [],
-    D1: [],
-    W1: []
-  };
+const candles = {
+  M1:[],
+  M5:[],
+  M15:[],
+  H1:[],
+  H4:[],
+  D1:[],
+  W1:[]
+};
 
-  const timeframeSeconds = {
-    M1: 60,
-    M5: 300,
-    M15: 900,
-    H1: 3600,
-    H4: 14400,
-    D1: 86400,
-    W1: 604800
-  };
+const seconds = {
+  M1:60,
+  M5:300,
+  M15:900,
+  H1:3600,
+  H4:14400,
+  D1:86400,
+  W1:604800
+};
 
-  const livePriceEl = document.getElementById("livePrice");
-  const connectionDot = document.getElementById("connectionDot");
-  const connectionStatus = document.getElementById("connectionStatus");
-  const biasEl = document.getElementById("bias");
-  const activeTfEl = document.getElementById("activeTf");
-  const confidenceEl = document.getElementById("confidence");
-  const verdictEl = document.getElementById("verdict");
-  const verdictNoteEl = document.getElementById("verdictNote");
-  const logEl = document.getElementById("log");
+const priceEl =
+  document.getElementById("price");
 
-  function addLog(message) {
-    const now = new Date().toLocaleTimeString();
-    logEl.innerHTML =
-      `<div>[${now}] ${message}</div>` + logEl.innerHTML;
+const statusEl =
+  document.getElementById("status");
+
+const connectionEl =
+  document.getElementById("connection");
+
+const dotEl =
+  document.getElementById("dot");
+
+const biasEl =
+  document.getElementById("bias");
+
+const tfDisplay =
+  document.getElementById("tfDisplay");
+
+const logEl =
+  document.getElementById("log");
+
+const verdictEl =
+  document.getElementById("verdict");
+
+const noteEl =
+  document.getElementById("note");
+
+
+function log(message){
+
+  const time =
+    new Date().toLocaleTimeString();
+
+  logEl.innerHTML =
+    `<div>[${time}] ${message}</div>` +
+    logEl.innerHTML;
+}
+
+
+function setOnline(){
+
+  dotEl.classList.add("online");
+
+  statusEl.textContent =
+    "Deriv LIVE";
+
+  connectionEl.textContent =
+    "ONLINE";
+
+  connectionEl.className =
+    "value green";
+}
+
+
+function setOffline(){
+
+  dotEl.classList.remove("online");
+
+  statusEl.textContent =
+    "Disconnected";
+
+  connectionEl.textContent =
+    "OFFLINE";
+
+  connectionEl.className =
+    "value red";
+}
+
+
+/* =========================================================
+   CONNECT
+   ========================================================= */
+
+function connect(){
+
+  if(socket){
+
+    try{
+      socket.close();
+    }catch(e){}
+
   }
 
-  function setConnection(status) {
-    if (status === "online") {
-      connectionDot.classList.add("online
+  setOffline();
+
+  statusEl.textContent =
+    "Connecting to Deriv...";
+
+  log("Opening CURRENT Deriv public WebSocket...");
+
+  socket =
+    new WebSocket(DERIV_WS);
+
+
+  socket.onopen = function(){
+
+    setOnline();
+
+    log("WebSocket connected.");
+
+    log("Requesting current active symbols...");
+
+    socket.send(JSON.stringify({
+
+      active_symbols:"brief"
+
+    }));
+
+  };
+
+
+  socket.onmessage = function(event){
+
+    let data;
+
+    try{
+
+      data =
+        JSON.parse(event.data);
+
+    }catch(error){
+
+      log("Invalid message received.");
+
+      return;
+    }
+
+
+    if(data.errors){
+
+      log(
+        "DERIV ERROR: " +
+        JSON.stringify(data.errors)
+      );
+
+      return;
+    }
+
+
+    if(data.msg_type === "active_symbols"){
+
+      processSymbols(
+        data.active_symbols
+      );
+
+      return;
+    }
+
+
+    if(data.msg_type === "tick"){
+
+      processTick(data.tick);
+
+      return;
+    }
+
+  };
+
+
+  socket.onerror = function(){
+
+    log(
+      "WebSocket error. Check browser/network."
+    );
+
+    setOffline();
+
+  };
+
+
+  socket.onclose = function(){
+
+    log(
+      "Deriv WebSocket closed."
+    );
+
+    setOffline();
+
+  };
+
+}
+
+
+/* =========================================================
+   FIND GOLD
+   ========================================================= */
+
+function processSymbols(symbols){
+
+  if(!Array.isArray(symbols)){
+
+    log(
+      "Deriv returned no symbol list."
+    );
+
+    return;
+  }
+
+
+  log(
+    "Received " +
+    symbols.length +
+    " active symbols."
+  );
+
+
+  /*
+    CURRENT DERIV API:
+    underlying_symbol
+    underlying_symbol_name
+    underlying_symbol_type
+  */
+
+  const matches =
+    symbols.filter(function(item){
+
+      const code =
+        String(
+          item.underlying_symbol || ""
+        ).toUpperCase();
+
+      const name =
+        String(
+          item.underlying_symbol_name || ""
+        ).toUpperCase();
+
+      return (
+        code.includes("XAU") ||
+        code.includes("GOLD") ||
+        name.includes("XAU") ||
+        name.includes("GOLD")
+      );
+
+    });
+
+
+  console.log(
+    "DERIV GOLD MATCHES:",
+    matches
+  );
+
+
+  if(!matches.length){
+
+    log(
+      "❌ No XAU/GOLD symbol found."
+    );
+
+    log(
+      "Open browser console and inspect active_symbols."
+    );
+
+    statusEl.textContent =
+      "XAUUSD NOT FOUND";
+
+    return;
+  }
+
+
+  /*
+    Prefer a symbol whose code/name
+    clearly represents XAUUSD.
+  */
+
+  let selected =
+    matches.find(function(item){
+
+      const text =
+        (
+          item.underlying_symbol +
+          " " +
+          item.underlying_symbol_name
+        ).toUpperCase();
+
+      return (
+        text.includes("XAUUSD") ||
+        text.includes("XAU/USD")
+      );
+
+    });
+
+
+  if(!selected){
+
+    selected = matches[0];
+
+  }
+
+
+  goldSymbol =
+    selected.underlying_symbol;
+
+
+  const displayName =
+    selected.underlying_symbol_name ||
+    goldSymbol;
+
+
+  log(
+    "✅ Gold found: " +
+    displayName +
+    " [" +
+    goldSymbol +
+    "]"
+  );
+
+
+  log(
+    "Subscribing to live ticks..."
+  );
+
+
+  socket.send(JSON.stringify({
+
+    ticks:goldSymbol,
+
+    subscribe:1
+
+  }));
+
+}
+
+
+/* =========================================================
+   LIVE TICK
+   ========================================================= */
+
+function processTick(tick){
+
+  if(!tick){
+
+    return;
+  }
+
+
+  const price =
+    Number(tick.quote);
+
+
+  const epoch =
+    Number(tick.epoch);
+
+
+  if(
+    !Number.isFinite(price) ||
+    !Number.isFinite(epoch)
+  ){
+
+    return;
+  }
+
+
+  lastPrice =
+    price;
+
+
+  priceEl.textContent =
+    price.toFixed(2);
+
+
+  connectionEl.textContent =
+    "LIVE";
+
+  connectionEl.className =
+    "value green";
+
+
+  buildCandles(
+    price,
+    epoch
+  );
+
+
+  draw();
+
+}
+
+
+/* =========================================================
+   CANDLE BUILDER
+   ========================================================= */
+
+function buildCandles(
+  price,
+  epoch
+){
+
+  Object.keys(seconds)
+    .forEach(function(tf){
+
+      const period =
+        seconds[tf];
+
+      const bucket =
+        Math.floor(epoch / period) *
+        period;
+
+      const list =
+        candles[tf];
+
+      let current =
+        list[list.length - 1];
+
+
+      if(
+        !current ||
+        current.time !== bucket
+      ){
+
+        current = {
+
+          time:bucket,
+
+          open:price,
+
+          high:price,
+
+          low:price,
+
+          close:price
+
+        };
+
+        list.push(current);
+
+
+        if(list.length > 300){
+
+          list.shift();
+
+        }
+
+      }else{
+
+        current.high =
+          Math.max(
+            current.high,
+            price
+          );
+
+        current.low =
+          Math.min(
+            current.low,
+            price
+          );
+
+        current.close =
+          price;
+
+      }
+
+    });
+
+}
+
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+function resizeCanvas(){
+
+  const canvas =
+    document.getElementById("canvas");
+
+  const box =
+    canvas.parentElement;
+
+  const ratio =
+    window.devicePixelRatio || 1;
+
+  canvas.width =
+    box.clientWidth * ratio;
+
+  canvas.height =
+    box.clientHeight * ratio;
+
+  canvas.style.width =
+    box.clientWidth + "px";
+
+  canvas.style.height =
+    box.clientHeight + "px";
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
+  return ctx;
+}
+
+
+function draw(){
+
+  const canvas =
+    document.getElementById("canvas");
+
+  const ctx =
+    resizeCanvas();
+
+  const width =
+    canvas.clientWidth;
+
+  const height =
+    canvas.clientHeight;
+
+
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  const data =
+    candles[selectedTF];
+
+
+  if(!data.length){
+
+    ctx.fillStyle =
+      "#8994a5";
+
+    ctx.font =
+      "15px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "Waiting for XAUUSD candles...",
+      width / 2,
+      height / 2
+    );
+
+    return;
+  }
+
+
+  const visible =
+    data.slice(-70);
+
+
+  let min =
+    Infinity;
+
+  let max =
+    -Infinity;
+
+
+  visible.forEach(function(c){
+
+    min =
+      Math.min(
+        min,
+        c.low
+      );
+
+    max =
+      Math.max(
+        max,
+        c.high
+      );
+
+  });
+
+
+  const range =
+    max - min || 1;
+
+  const padding =
+    range * .08;
+
+  min -= padding;
+  max += padding;
+
+
+  const chartWidth =
+    width - 70;
+
+  const chartHeight =
+    height - 30;
+
+
+  function y(value){
+
+    return 10 +
+      (
+        (max - value) /
+        (max - min)
+      ) *
+      chartHeight;
+
+  }
+
+
+  /* grid */
+
+  ctx.strokeStyle =
+    "#202b3a";
+
+  ctx.lineWidth = 1;
+
+
+  for(let i=0;i<5;i++){
+
+    const gy =
+      10 +
+      (chartHeight / 4) *
+      i;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      gy
+    );
+
+    ctx.lineTo(
+      chartWidth,
+      gy
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  const slot =
+    chartWidth /
+    visible.length;
+
+
+  const candleWidth =
+    Math.max(
+      2,
+      slot * .65
+    );
+
+
+  visible.forEach(function(c,i){
+
+    const x =
+      i * slot +
+      (slot - candleWidth)/2;
+
+
+    const bullish =
+      c.close >= c.open;
+
+
+    ctx.strokeStyle =
+      bullish ?
+      "#39dc8a" :
+      "#ff536d";
+
+    ctx.fillStyle =
+      bullish ?
+      "#39dc8a" :
+      "#ff536d";
+
+
+    const center =
+      x +
+      candleWidth/2;
+
+
+    /* wick */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      center,
+      y(c.high)
+    );
+
+    ctx.lineTo(
+      center,
+      y(c.low)
+    );
+
+    ctx.stroke();
+
+
+    /* body */
+
+    const top =
+      y(
+        Math.max(
+          c.open,
+          c.close
+        )
+      );
+
+    const bottom =
+      y(
+        Math.min(
+          c.open,
+          c.close
+        )
+      );
+
+
+    ctx.fillRect(
+      x,
+      top,
+      candleWidth,
+      Math.max(
+        1,
+        bottom-top
+      )
+    );
+
+  });
+
+
+  ctx.fillStyle =
+    "#8994a5";
+
+  ctx.font =
+    "11px Arial";
+
+  ctx.textAlign =
+    "left";
+
+
+  ctx.fillText(
+    max.toFixed(2),
+    chartWidth + 7,
+    17
+  );
+
+
+  ctx.fillText(
+    min.toFixed(2),
+    chartWidth + 7,
+    height - 10
+  );
+
+}
+
+
+/* =========================================================
+   TIMEFRAMES
+   ========================================================= */
+
+document
+.querySelectorAll("[data-tf]")
+.forEach(function(button){
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      selectedTF =
+        button.dataset.tf;
+
+      tfDisplay.textContent =
+        selectedTF;
+
+
+      document
+      .querySelectorAll("[data-tf]")
+      .forEach(function(b){
+
+        b.classList.remove(
+          "active"
+        );
+
+      });
+
+
+      button.classList.add(
+        "active"
+      );
+
+
+      draw();
+
+    }
+  );
+
+});
+
+
+/* =========================================================
+   SCAN
+   ========================================================= */
+
+document
+.getElementById("scan")
+.addEventListener(
+  "click",
+  function(){
+
+    if(!lastPrice){
+
+      log(
+        "❌ Cannot scan: no live XAUUSD price."
+      );
+
+      return;
+    }
+
+
+    log(
+      "ACE scan requested at " +
+      lastPrice.toFixed(2)
+    );
+
+
+    verdictEl.textContent =
+      "LIVE DATA CONNECTED";
+
+
+    verdictEl.className =
+      "verdict green";
+
+
+    noteEl.textContent =
+      "XAUUSD is streaming from Deriv. " +
+      "The next phase will add structure, " +
+      "liquidity, confirmation and trade logic.";
+
+  }
+);
+
+
+/* =========================================================
+   RECONNECT
+   ========================================================= */
+
+document
+.getElementById("reconnect")
+.addEventListener(
+  "click",
+  connect
+);
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+log(
+  "ACE XAU V1 initialized."
+);
+
+log(
+  "Public Deriv market-data mode."
+);
+
+connect();
+
+
+window.addEventListener(
+  "resize",
+  draw
+);
+
+</script>
+
+</body>
+  </html>
