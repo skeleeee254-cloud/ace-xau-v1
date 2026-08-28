@@ -2,349 +2,130 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ACE XAU V1</title>
-
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#080b10;
-  color:#f5f7fa;
-  font-family:Arial,sans-serif;
-}
-
-header{
-  padding:20px;
-  background:#0e131b;
-  border-bottom:1px solid #273142;
-}
-
-.header{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
+body{margin:0;background:#080b10;color:#f5f7fa;font-family:Arial,sans-serif}
+header{padding:18px;background:#0e131b;border-bottom:1px solid #273142}
+.header,main{max-width:1200px;margin:auto}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px}
 h1{margin:0;font-size:24px}
-.sub{color:#8994a5;font-size:13px;margin-top:5px}
-
-.status{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:13px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#ff536d;
-}
-
-.dot.online{
-  background:#39dc8a;
-  box-shadow:0 0 12px #39dc8a;
-}
-
-main{
-  max-width:1200px;
-  margin:auto;
-  padding:18px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.card{
-  background:#111722;
-  border:1px solid #273142;
-  border-radius:14px;
-  padding:16px;
-}
-
-.label{
-  color:#8994a5;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-}
-
-.value{
-  margin-top:8px;
-  font-size:22px;
-  font-weight:bold;
-}
-
-.price{color:#f7c948}
-.green{color:#39dc8a}
-.red{color:#ff536d}
-.yellow{color:#f7c948}
-
-.chart-card{
-  margin-top:16px;
-}
-
-.timeframes{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-
-button{
-  padding:9px 13px;
-  border-radius:8px;
-  border:1px solid #2a3547;
-  background:#171e2a;
-  color:#fff;
-  font-weight:bold;
-}
-
-button.active{
-  background:#4f7cff;
-  border-color:#4f7cff;
-}
-
-#chart{
-  height:420px;
-}
-
-canvas{
-  width:100%;
-  height:100%;
-  display:block;
-  background:#0b1017;
-  border-radius:10px;
-}
-
-.controls{
-  display:flex;
-  gap:10px;
-  margin-top:14px;
-}
-
-.scan{
-  background:#f7c948;
-  color:#111;
-  border:0;
-}
-
-.analysis{
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:16px;
-  margin-top:16px;
-}
-
-.verdict{
-  font-size:28px;
-  font-weight:bold;
-  margin-top:12px;
-}
-
-.note{
-  color:#9aa5b6;
-  line-height:1.5;
-  margin-top:8px;
-}
-
-.trade-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:18px;
-}
-
-.trade-box{
-  background:#171e2a;
-  padding:12px;
-  border-radius:9px;
-}
-
-.trade-box strong{
-  display:block;
-  margin-top:6px;
-}
-
-.log{
-  height:260px;
-  overflow:auto;
-  background:#080b10;
-  border-radius:9px;
-  padding:10px;
-  font-family:monospace;
-  font-size:12px;
-  color:#aab5c5;
-}
-
-@media(max-width:800px){
-  .cards{grid-template-columns:1fr 1fr}
-  .analysis{grid-template-columns:1fr}
-}
-
-@media(max-width:500px){
-  .header{
-    align-items:flex-start;
-    flex-direction:column;
-    gap:12px;
-  }
-
-  #chart{height:320px}
-}
+.sub,.note,.chart-info{color:#8994a5}
+.status{display:flex;align-items:center;gap:8px;font-size:13px}
+.dot{width:10px;height:10px;border-radius:50%;background:#ff536d}
+.dot.online{background:#39dc8a;box-shadow:0 0 12px #39dc8a}
+main{padding:18px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:#111722;border:1px solid #273142;border-radius:14px;padding:16px}
+.label{color:#8994a5;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.value{margin-top:8px;font-size:22px;font-weight:bold}
+.price,.yellow{color:#f7c948}.green{color:#39dc8a}.red{color:#ff536d}
+.chart-card{margin-top:16px}
+.timeframes,.controls{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+button{padding:9px 13px;border-radius:8px;border:1px solid #2a3547;background:#171e2a;color:white;font-weight:bold}
+button.active{background:#4f7cff;border-color:#4f7cff}
+#chart{height:430px}
+canvas{width:100%;height:100%;display:block;background:#0b1017;border-radius:10px}
+.chart-info{display:flex;justify-content:space-between;font-size:12px;margin-top:8px}
+.controls{margin-top:14px}.scan{background:#f7c948;color:#111;border:0}
+.analysis{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:16px}
+.verdict{font-size:28px;font-weight:bold;margin-top:12px}
+.note{line-height:1.5;margin-top:8px}
+.trade-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.trade-box{background:#171e2a;padding:12px;border-radius:9px}
+.trade-box strong{display:block;margin-top:6px}
+.log{height:260px;overflow:auto;background:#080b10;border-radius:9px;padding:10px;font-family:monospace;font-size:12px;color:#aab5c5}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}.analysis{grid-template-columns:1fr}}
+@media(max-width:500px){.header{align-items:flex-start;flex-direction:column}#chart{height:320px}.value{font-size:18px}}
 </style>
 </head>
 
 <body>
-
 <header>
-  <div class="header">
-    <div>
-      <h1>ACE XAU V1 🧠</h1>
-      <div class="sub">Live XAUUSD Market Intelligence</div>
-    </div>
-
-    <div class="status">
-      <span id="dot" class="dot"></span>
-      <span id="status">Connecting to Deriv...</span>
-    </div>
-  </div>
+<div class="header">
+<div>
+<h1>ACE XAU V1 🧠</h1>
+<div class="sub">Live XAUUSD Market Intelligence</div>
+</div>
+<div class="status"><span id="dot" class="dot"></span><span id="status">Starting...</span></div>
+</div>
 </header>
 
 <main>
 
 <div class="cards">
-
-  <div class="card">
-    <div class="label">XAUUSD Live Price</div>
-    <div id="price" class="value price">Loading...</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Market Bias</div>
-    <div id="bias" class="value yellow">WAIT</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Timeframe</div>
-    <div id="tfDisplay" class="value">M5</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Connection</div>
-    <div id="connection" class="value yellow">OFFLINE</div>
-  </div>
-
+<div class="card"><div class="label">XAUUSD Live Price</div><div id="price" class="value price">Loading...</div></div>
+<div class="card"><div class="label">Market Bias</div><div id="bias" class="value yellow">WAIT</div></div>
+<div class="card"><div class="label">Timeframe</div><div id="tfDisplay" class="value">M5</div></div>
+<div class="card"><div class="label">Connection</div><div id="connection" class="value yellow">CONNECTING</div></div>
 </div>
 
 <div class="card chart-card">
+<div class="timeframes">
+<button data-tf="M1">M1</button>
+<button data-tf="M5" class="active">M5</button>
+<button data-tf="M15">M15</button>
+<button data-tf="H1">H1</button>
+<button data-tf="H4">H4</button>
+<button data-tf="D1">D1</button>
+<button data-tf="W1">W1</button>
+</div>
 
-  <div class="timeframes">
-    <button data-tf="M1">M1</button>
-    <button data-tf="M5" class="active">M5</button>
-    <button data-tf="M15">M15</button>
-    <button data-tf="H1">H1</button>
-    <button data-tf="H4">H4</button>
-    <button data-tf="D1">D1</button>
-    <button data-tf="W1">W1</button>
-  </div>
+<div id="chart"><canvas id="canvas"></canvas></div>
 
-  <div id="chart">
-    <canvas id="canvas"></canvas>
-  </div>
-
+<div class="chart-info">
+<span id="chartStatus">Waiting for market data...</span>
+<span id="candleCount">0 candles</span>
+</div>
 </div>
 
 <div class="controls">
-  <button class="scan" id="scan">SCAN XAUUSD 🔎</button>
-  <button id="reconnect">RECONNECT DERIV</button>
+<button class="scan" id="scan">SCAN XAUUSD 🔎</button>
+<button id="reconnect">RECONNECT DERIV</button>
 </div>
 
 <div class="analysis">
+<div class="card">
+<div class="label">ACE Verdict</div>
+<div id="verdict" class="verdict yellow">WAITING FOR DATA</div>
+<div id="note" class="note">ACE is loading historical and live XAUUSD data.</div>
 
-  <div class="card">
+<div class="trade-grid">
+<div class="trade-box"><div class="label">Entry</div><strong id="entry">—</strong></div>
+<div class="trade-box"><div class="label">Stop Loss</div><strong id="sl">—</strong></div>
+<div class="trade-box"><div class="label">Take Profit</div><strong id="tp">—</strong></div>
+<div class="trade-box"><div class="label">Risk : Reward</div><strong id="rr">—</strong></div>
+</div>
+</div>
 
-    <div class="label">ACE Verdict</div>
-
-    <div id="verdict" class="verdict yellow">
-      WAITING FOR DATA
-    </div>
-
-    <div id="note" class="note">
-      ACE will not generate a trade until live XAUUSD market data is received.
-    </div>
-
-    <div class="trade-grid">
-
-      <div class="trade-box">
-        <div class="label">Entry</div>
-        <strong id="entry">—</strong>
-      </div>
-
-      <div class="trade-box">
-        <div class="label">Stop Loss</div>
-        <strong id="sl">—</strong>
-      </div>
-
-      <div class="trade-box">
-        <div class="label">Take Profit</div>
-        <strong id="tp">—</strong>
-      </div>
-
-      <div class="trade-box">
-        <div class="label">Risk : Reward</div>
-        <strong id="rr">—</strong>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="card">
-
-    <div class="label">ACE System Log</div>
-
-    <div id="log" class="log"></div>
-
-  </div>
-
+<div class="card">
+<div class="label">ACE System Log</div>
+<div id="log" class="log"></div>
+</div>
 </div>
 
 </main>
 
 <script>
+/* ACE XAU V1 — CURRENT DERIV MARKET DATA ENGINE */
 
-/* =========================================================
-   ACE XAU V1
-   PHASE 1 — DERIV PUBLIC MARKET DATA
-   ========================================================= */
-
-const DERIV_WS =
-  "wss://api.derivws.com/trading/v1/options/ws/public";
+const WS_URL = "wss://api.derivws.com/trading/v1/options/ws/public";
+const HISTORY_COUNT = 100;
 
 let socket = null;
 let selectedTF = "M5";
 let goldSymbol = null;
 let lastPrice = null;
+let reconnectTimer = null;
+let reconnectAttempts = 0;
+let pingTimer = null;
 
 const candles = {
-  M1:[],
-  M5:[],
-  M15:[],
-  H1:[],
-  H4:[],
-  D1:[],
-  W1:[]
+  M1:[], M5:[], M15:[], H1:[], H4:[], D1:[], W1:[]
 };
 
-const seconds = {
+const timeframeSeconds = {
   M1:60,
   M5:300,
   M15:900,
@@ -354,889 +135,592 @@ const seconds = {
   W1:604800
 };
 
-const priceEl =
-  document.getElementById("price");
-
-const statusEl =
-  document.getElementById("status");
-
-const connectionEl =
-  document.getElementById("connection");
-
-const dotEl =
-  document.getElementById("dot");
-
-const biasEl =
-  document.getElementById("bias");
-
-const tfDisplay =
-  document.getElementById("tfDisplay");
-
-const logEl =
-  document.getElementById("log");
-
-const verdictEl =
-  document.getElementById("verdict");
-
-const noteEl =
-  document.getElementById("note");
-
+const $ = id => document.getElementById(id);
 
 function log(message){
-
-  const time =
-    new Date().toLocaleTimeString();
-
-  logEl.innerHTML =
-    `<div>[${time}] ${message}</div>` +
-    logEl.innerHTML;
+  const time = new Date().toLocaleTimeString();
+  $("log").innerHTML =
+    "<div>[" + time + "] " + message + "</div>" +
+    $("log").innerHTML;
 }
 
+function setConnecting(){
+  $("dot").classList.remove("online");
+  $("status").textContent = "Connecting to Deriv...";
+  $("connection").textContent = "CONNECTING";
+  $("connection").className = "value yellow";
+}
 
 function setOnline(){
-
-  dotEl.classList.add("online");
-
-  statusEl.textContent =
-    "Deriv LIVE";
-
-  connectionEl.textContent =
-    "ONLINE";
-
-  connectionEl.className =
-    "value green";
+  $("dot").classList.add("online");
+  $("status").textContent = "Deriv LIVE";
+  $("connection").textContent = "LIVE";
+  $("connection").className = "value green";
 }
 
-
-function setOffline(){
-
-  dotEl.classList.remove("online");
-
-  statusEl.textContent =
-    "Disconnected";
-
-  connectionEl.textContent =
-    "OFFLINE";
-
-  connectionEl.className =
-    "value red";
+function setOffline(text){
+  $("dot").classList.remove("online");
+  $("status").textContent = text || "Disconnected";
+  $("connection").textContent = "OFFLINE";
+  $("connection").className = "value red";
 }
-
-
-/* =========================================================
-   CONNECT
-   ========================================================= */
 
 function connect(){
 
+  clearTimeout(reconnectTimer);
+  clearInterval(pingTimer);
+
   if(socket){
-
-    try{
-      socket.close();
-    }catch(e){}
-
+    try{socket.close();}catch(e){}
   }
 
-  setOffline();
+  setConnecting();
+  log("Opening Deriv public WebSocket...");
 
-  statusEl.textContent =
-    "Connecting to Deriv...";
-
-  log("Opening CURRENT Deriv public WebSocket...");
-
-  socket =
-    new WebSocket(DERIV_WS);
-
+  socket = new WebSocket(WS_URL);
 
   socket.onopen = function(){
-
+    reconnectAttempts = 0;
     setOnline();
+    log("Deriv WebSocket connected.");
 
-    log("WebSocket connected.");
-
-    log("Requesting current active symbols...");
+    startPing();
 
     socket.send(JSON.stringify({
-
-      active_symbols:"brief"
-
+      active_symbols:"brief",
+      req_id:1
     }));
-
   };
-
 
   socket.onmessage = function(event){
 
     let data;
 
     try{
-
-      data =
-        JSON.parse(event.data);
-
-    }catch(error){
-
-      log("Invalid message received.");
-
+      data = JSON.parse(event.data);
+    }catch(e){
+      log("Unreadable message received.");
       return;
     }
 
-
-    if(data.errors){
-
-      log(
-        "DERIV ERROR: " +
-        JSON.stringify(data.errors)
-      );
-
+    if(data.error){
+      log("DERIV ERROR: " + (data.error.message || "Unknown error"));
       return;
     }
-
 
     if(data.msg_type === "active_symbols"){
-
-      processSymbols(
-        data.active_symbols
-      );
-
+      findGold(data.active_symbols);
       return;
     }
 
+    if(data.msg_type === "candles"){
+      processHistory(data.candles);
+      return;
+    }
 
     if(data.msg_type === "tick"){
-
       processTick(data.tick);
-
       return;
     }
-
   };
 
-
-  socket.onerror = function(event){
-
-  console.error(
-    "Deriv WebSocket error:",
-    event
-  );
-
-  log(
-    "Deriv WebSocket ERROR. " +
-    "Connection failed before market data arrived."
-  );
-
-  setOffline();
-
-};
-
+  socket.onerror = function(){
+    log("WebSocket ERROR.");
+  };
 
   socket.onclose = function(event){
 
-  const reason =
-    event.reason ||
-    "No reason provided";
-
-  log(
-    "Deriv WebSocket CLOSED | " +
-    "Code: " + event.code +
-    " | Clean: " + event.wasClean +
-    " | Reason: " + reason
-  );
-
-  setOffline();
-
-  statusEl.textContent =
-    "Deriv connection closed";
-
-};
-
-
-/* =========================================================
-   FIND GOLD
-   ========================================================= */
-
-function processSymbols(symbols){
-
-  if(!Array.isArray(symbols)){
+    clearInterval(pingTimer);
 
     log(
-      "Deriv returned no symbol list."
+      "WebSocket CLOSED | Code: " +
+      event.code +
+      " | Reason: " +
+      (event.reason || "No reason supplied")
     );
 
-    return;
-  }
-
-
-  log(
-    "Received " +
-    symbols.length +
-    " active symbols."
-  );
-
-
-  /*
-    CURRENT DERIV API:
-    underlying_symbol
-    underlying_symbol_name
-    underlying_symbol_type
-  */
-
-  const matches =
-    symbols.filter(function(item){
-
-      const code =
-        String(
-          item.underlying_symbol || ""
-        ).toUpperCase();
-
-      const name =
-        String(
-          item.underlying_symbol_name || ""
-        ).toUpperCase();
-
-      return (
-        code.includes("XAU") ||
-        code.includes("GOLD") ||
-        name.includes("XAU") ||
-        name.includes("GOLD")
-      );
-
-    });
-
-
-  console.log(
-    "DERIV GOLD MATCHES:",
-    matches
-  );
-
-
-  if(!matches.length){
-
-    log(
-      "❌ No XAU/GOLD symbol found."
-    );
-
-    log(
-      "Open browser console and inspect active_symbols."
-    );
-
-    statusEl.textContent =
-      "XAUUSD NOT FOUND";
-
-    return;
-  }
-
-
-  /*
-    Prefer a symbol whose code/name
-    clearly represents XAUUSD.
-  */
-
-  let selected =
-    matches.find(function(item){
-
-      const text =
-        (
-          item.underlying_symbol +
-          " " +
-          item.underlying_symbol_name
-        ).toUpperCase();
-
-      return (
-        text.includes("XAUUSD") ||
-        text.includes("XAU/USD")
-      );
-
-    });
-
-
-  if(!selected){
-
-    selected = matches[0];
-
-  }
-
-
-  goldSymbol =
-    selected.underlying_symbol;
-
-
-  const displayName =
-    selected.underlying_symbol_name ||
-    goldSymbol;
-
-
-  log(
-    "✅ Gold found: " +
-    displayName +
-    " [" +
-    goldSymbol +
-    "]"
-  );
-
-
-  log(
-    "Subscribing to live ticks..."
-  );
-
-
-  socket.send(JSON.stringify({
-
-    ticks:goldSymbol,
-
-    subscribe:1
-
-  }));
-
+    setOffline("Deriv disconnected");
+    scheduleReconnect();
+  };
 }
 
+function startPing(){
 
-/* =========================================================
-   LIVE TICK
-   ========================================================= */
+  clearInterval(pingTimer);
+
+  pingTimer = setInterval(function(){
+
+    if(socket && socket.readyState === WebSocket.OPEN){
+      socket.send(JSON.stringify({ping:1}));
+    }
+
+  },30000);
+}
+
+function scheduleReconnect(){
+
+  clearTimeout(reconnectTimer);
+
+  reconnectAttempts++;
+
+  const delay = Math.min(
+    30000,
+    2000 * Math.pow(2,reconnectAttempts - 1)
+  );
+
+  log("Retrying in " + Math.round(delay / 1000) + " seconds...");
+
+  reconnectTimer = setTimeout(connect,delay);
+}
+
+function findGold(symbols){
+
+  if(!Array.isArray(symbols)){
+    log("No active symbols received.");
+    return;
+  }
+
+  const matches = symbols.filter(function(item){
+
+    const code = String(
+      item.underlying_symbol || ""
+    ).toUpperCase();
+
+    const name = String(
+      item.underlying_symbol_name || ""
+    ).toUpperCase();
+
+    return (
+      code.includes("XAUUSD") ||
+      code.includes("XAU") ||
+      name.includes("XAU/USD") ||
+      name.includes("GOLD")
+    );
+  });
+
+  if(!matches.length){
+    log("❌ XAUUSD/GOLD not found in active symbols.");
+    $("status").textContent = "XAUUSD NOT FOUND";
+    return;
+  }
+
+  const selected =
+    matches.find(function(item){
+      return String(item.underlying_symbol || "")
+        .toUpperCase()
+        .includes("XAUUSD");
+    }) || matches[0];
+
+  goldSymbol = selected.underlying_symbol;
+
+  log(
+    "Gold found: " +
+    (selected.underlying_symbol_name || goldSymbol) +
+    " [" + goldSymbol + "]"
+  );
+
+  loadHistory();
+  subscribeTicks();
+}
+
+function loadHistory(){
+
+  if(!goldSymbol || !socket ||
+     socket.readyState !== WebSocket.OPEN){
+    return;
+  }
+
+  $("chartStatus").textContent =
+    "Loading " + HISTORY_COUNT + " historical " +
+    selectedTF + " candles...";
+
+  socket.send(JSON.stringify({
+    ticks_history:goldSymbol,
+    end:"latest",
+    count:HISTORY_COUNT,
+    style:"candles",
+    granularity:timeframeSeconds[selectedTF],
+    subscribe:0,
+    req_id:10
+  }));
+
+  log("Requesting " + HISTORY_COUNT + " " + selectedTF + " candles...");
+}
+
+function subscribeTicks(){
+
+  if(!goldSymbol || !socket ||
+     socket.readyState !== WebSocket.OPEN){
+    return;
+  }
+
+  socket.send(JSON.stringify({
+    ticks:goldSymbol,
+    subscribe:1,
+    req_id:20
+  }));
+
+  log("Subscribed to live XAUUSD ticks.");
+}
+
+function processHistory(data){
+
+  if(!Array.isArray(data)){
+    log("Historical candle response is empty.");
+    return;
+  }
+
+  candles[selectedTF] = data
+    .map(function(c){
+      return {
+        time:Number(c.epoch),
+        open:Number(c.open),
+        high:Number(c.high),
+        low:Number(c.low),
+        close:Number(c.close)
+      };
+    })
+    .filter(function(c){
+      return Number.isFinite(c.time) &&
+             Number.isFinite(c.open) &&
+             Number.isFinite(c.high) &&
+             Number.isFinite(c.low) &&
+             Number.isFinite(c.close);
+    });
+
+  $("candleCount").textContent =
+    candles[selectedTF].length + " candles";
+
+  $("chartStatus").textContent =
+    "Live chart • " +
+    candles[selectedTF].length +
+    " historical candles";
+
+  log(
+    "Loaded " +
+    candles[selectedTF].length +
+    " historical " +
+    selectedTF +
+    " candles."
+  );
+
+  draw();
+}
 
 function processTick(tick){
 
-  if(!tick){
+  if(!tick)return;
 
-    return;
-  }
+  const price = Number(tick.quote);
+  const epoch = Number(tick.epoch);
 
+  if(!Number.isFinite(price) ||
+     !Number.isFinite(epoch))return;
 
-  const price =
-    Number(tick.quote);
+  lastPrice = price;
+  $("price").textContent = price.toFixed(2);
 
+  setOnline();
 
-  const epoch =
-    Number(tick.epoch);
-
-
-  if(
-    !Number.isFinite(price) ||
-    !Number.isFinite(epoch)
-  ){
-
-    return;
-  }
-
-
-  lastPrice =
-    price;
-
-
-  priceEl.textContent =
-    price.toFixed(2);
-
-
-  connectionEl.textContent =
-    "LIVE";
-
-  connectionEl.className =
-    "value green";
-
-
-  buildCandles(
-    price,
-    epoch
-  );
-
-
+  updateCurrentCandle(price,epoch);
   draw();
-
 }
 
+function updateCurrentCandle(price,epoch){
 
-/* =========================================================
-   CANDLE BUILDER
-   ========================================================= */
+  const list = candles[selectedTF];
 
-function buildCandles(
-  price,
-  epoch
-){
+  if(!list.length)return;
 
-  Object.keys(seconds)
-    .forEach(function(tf){
+  const period = timeframeSeconds[selectedTF];
+  const bucket = Math.floor(epoch / period) * period;
+  const current = list[list.length - 1];
 
-      const period =
-        seconds[tf];
+  if(current.time === bucket){
 
-      const bucket =
-        Math.floor(epoch / period) *
-        period;
+    current.high = Math.max(current.high,price);
+    current.low = Math.min(current.low,price);
+    current.close = price;
 
-      const list =
-        candles[tf];
+  }else if(bucket > current.time){
 
-      let current =
-        list[list.length - 1];
-
-
-      if(
-        !current ||
-        current.time !== bucket
-      ){
-
-        current = {
-
-          time:bucket,
-
-          open:price,
-
-          high:price,
-
-          low:price,
-
-          close:price
-
-        };
-
-        list.push(current);
-
-
-        if(list.length > 300){
-
-          list.shift();
-
-        }
-
-      }else{
-
-        current.high =
-          Math.max(
-            current.high,
-            price
-          );
-
-        current.low =
-          Math.min(
-            current.low,
-            price
-          );
-
-        current.close =
-          price;
-
-      }
-
+    list.push({
+      time:bucket,
+      open:current.close,
+      high:Math.max(current.close,price),
+      low:Math.min(current.close,price),
+      close:price
     });
 
+    if(list.length > HISTORY_COUNT){
+      list.shift();
+    }
+
+    $("candleCount").textContent =
+      list.length + " candles";
+  }
 }
 
-
-/* =========================================================
-   CHART
-   ========================================================= */
-
-function resizeCanvas(){
-
-  const canvas =
-    document.getElementById("canvas");
-
-  const box =
-    canvas.parentElement;
-
-  const ratio =
-    window.devicePixelRatio || 1;
-
-  canvas.width =
-    box.clientWidth * ratio;
-
-  canvas.height =
-    box.clientHeight * ratio;
-
-  canvas.style.width =
-    box.clientWidth + "px";
-
-  canvas.style.height =
-    box.clientHeight + "px";
-
-  const ctx =
-    canvas.getContext("2d");
-
-  ctx.setTransform(
-    ratio,
-    0,
-    0,
-    ratio,
-    0,
-    0
-  );
-
-  return ctx;
-}
-
+/* CUSTOM CANDLE CHART */
 
 function draw(){
 
-  const canvas =
-    document.getElementById("canvas");
+  const canvas = $("canvas");
+  const box = $("chart");
+  const ratio = window.devicePixelRatio || 1;
 
-  const ctx =
-    resizeCanvas();
+  canvas.width = box.clientWidth * ratio;
+  canvas.height = box.clientHeight * ratio;
+  canvas.style.width = box.clientWidth + "px";
+  canvas.style.height = box.clientHeight + "px";
 
-  const width =
-    canvas.clientWidth;
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(ratio,0,0,ratio,0,0);
 
-  const height =
-    canvas.clientHeight;
+  const width = box.clientWidth;
+  const height = box.clientHeight;
 
+  ctx.clearRect(0,0,width,height);
 
-  ctx.clearRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-
-  const data =
-    candles[selectedTF];
-
+  const data = candles[selectedTF];
 
   if(!data.length){
 
-    ctx.fillStyle =
-      "#8994a5";
-
-    ctx.font =
-      "15px Arial";
-
-    ctx.textAlign =
-      "center";
+    ctx.fillStyle="#8994a5";
+    ctx.font="15px Arial";
+    ctx.textAlign="center";
 
     ctx.fillText(
-      "Waiting for XAUUSD candles...",
-      width / 2,
-      height / 2
+      "Loading historical XAUUSD candles...",
+      width/2,
+      height/2
     );
 
     return;
   }
 
+  const visible = data.slice(-80);
 
-  const visible =
-    data.slice(-70);
-
-
-  let min =
-    Infinity;
-
-  let max =
-    -Infinity;
-
+  let min = Infinity;
+  let max = -Infinity;
 
   visible.forEach(function(c){
-
-    min =
-      Math.min(
-        min,
-        c.low
-      );
-
-    max =
-      Math.max(
-        max,
-        c.high
-      );
-
+    min = Math.min(min,c.low);
+    max = Math.max(max,c.high);
   });
 
-
-  const range =
-    max - min || 1;
-
-  const padding =
-    range * .08;
+  const range = max - min || 1;
+  const padding = range * 0.08;
 
   min -= padding;
   max += padding;
 
+  const left = 5;
+  const top = 10;
+  const right = 70;
+  const bottom = 28;
 
-  const chartWidth =
-    width - 70;
-
-  const chartHeight =
-    height - 30;
-
+  const chartWidth = width-left-right;
+  const chartHeight = height-top-bottom;
 
   function y(value){
-
-    return 10 +
-      (
-        (max - value) /
-        (max - min)
-      ) *
-      chartHeight;
-
+    return top +
+      ((max-value)/(max-min))*chartHeight;
   }
 
+  ctx.strokeStyle="#202b3a";
 
-  /* grid */
+  for(let i=0;i<6;i++){
 
-  ctx.strokeStyle =
-    "#202b3a";
-
-  ctx.lineWidth = 1;
-
-
-  for(let i=0;i<5;i++){
-
-    const gy =
-      10 +
-      (chartHeight / 4) *
-      i;
+    const py = top+(chartHeight/5)*i;
 
     ctx.beginPath();
-
-    ctx.moveTo(
-      0,
-      gy
-    );
-
-    ctx.lineTo(
-      chartWidth,
-      gy
-    );
-
+    ctx.moveTo(left,py);
+    ctx.lineTo(left+chartWidth,py);
     ctx.stroke();
 
+    const level =
+      max-((max-min)/5)*i;
+
+    ctx.fillStyle="#8994a5";
+    ctx.font="10px Arial";
+    ctx.textAlign="left";
+
+    ctx.fillText(
+      level.toFixed(2),
+      left+chartWidth+6,
+      py+3
+    );
   }
 
-
-  const slot =
-    chartWidth /
-    visible.length;
-
-
-  const candleWidth =
-    Math.max(
-      2,
-      slot * .65
-    );
-
+  const slot = chartWidth/visible.length;
+  const candleWidth = Math.max(1,slot*0.7);
 
   visible.forEach(function(c,i){
 
     const x =
-      i * slot +
-      (slot - candleWidth)/2;
+      left+i*slot+
+      (slot-candleWidth)/2;
 
-
-    const bullish =
-      c.close >= c.open;
-
+    const bullish = c.close>=c.open;
 
     ctx.strokeStyle =
-      bullish ?
-      "#39dc8a" :
-      "#ff536d";
+      bullish?"#39dc8a":"#ff536d";
 
     ctx.fillStyle =
-      bullish ?
-      "#39dc8a" :
-      "#ff536d";
+      bullish?"#39dc8a":"#ff536d";
 
-
-    const center =
-      x +
-      candleWidth/2;
-
-
-    /* wick */
+    const center=x+candleWidth/2;
 
     ctx.beginPath();
-
-    ctx.moveTo(
-      center,
-      y(c.high)
-    );
-
-    ctx.lineTo(
-      center,
-      y(c.low)
-    );
-
+    ctx.moveTo(center,y(c.high));
+    ctx.lineTo(center,y(c.low));
     ctx.stroke();
 
-
-    /* body */
-
-    const top =
-      y(
-        Math.max(
-          c.open,
-          c.close
-        )
-      );
-
-    const bottom =
-      y(
-        Math.min(
-          c.open,
-          c.close
-        )
-      );
-
+    const bodyTop=y(Math.max(c.open,c.close));
+    const bodyBottom=y(Math.min(c.open,c.close));
 
     ctx.fillRect(
       x,
-      top,
+      bodyTop,
       candleWidth,
-      Math.max(
-        1,
-        bottom-top
-      )
+      Math.max(1,bodyBottom-bodyTop)
     );
-
   });
 
+  /* TIME SCALE */
 
-  ctx.fillStyle =
-    "#8994a5";
+  for(let i=0;i<5;i++){
 
-  ctx.font =
-    "11px Arial";
-
-  ctx.textAlign =
-    "left";
-
-
-  ctx.fillText(
-    max.toFixed(2),
-    chartWidth + 7,
-    17
-  );
-
-
-  ctx.fillText(
-    min.toFixed(2),
-    chartWidth + 7,
-    height - 10
-  );
-
-}
-
-
-/* =========================================================
-   TIMEFRAMES
-   ========================================================= */
-
-document
-.querySelectorAll("[data-tf]")
-.forEach(function(button){
-
-  button.addEventListener(
-    "click",
-    function(){
-
-      selectedTF =
-        button.dataset.tf;
-
-      tfDisplay.textContent =
-        selectedTF;
-
-
-      document
-      .querySelectorAll("[data-tf]")
-      .forEach(function(b){
-
-        b.classList.remove(
-          "active"
-        );
-
-      });
-
-
-      button.classList.add(
-        "active"
-      );
-
-
-      draw();
-
-    }
-  );
-
-});
-
-
-/* =========================================================
-   SCAN
-   ========================================================= */
-
-document
-.getElementById("scan")
-.addEventListener(
-  "click",
-  function(){
-
-    if(!lastPrice){
-
-      log(
-        "❌ Cannot scan: no live XAUUSD price."
-      );
-
-      return;
-    }
-
-
-    log(
-      "ACE scan requested at " +
-      lastPrice.toFixed(2)
+    const index = Math.floor(
+      i*(visible.length-1)/4
     );
 
+    const c = visible[index];
+    if(!c)continue;
 
-    verdictEl.textContent =
-      "LIVE DATA CONNECTED";
+    const date = new Date(c.time*1000);
 
+    let label;
 
-    verdictEl.className =
-      "verdict green";
+    if(selectedTF==="D1" || selectedTF==="W1"){
+      label=date.toLocaleDateString(
+        undefined,
+        {month:"short",day:"numeric"}
+      );
+    }else{
+      label=date.toLocaleTimeString(
+        undefined,
+        {hour:"2-digit",minute:"2-digit"}
+      );
+    }
 
+    ctx.fillStyle="#8994a5";
+    ctx.font="10px Arial";
+    ctx.textAlign="center";
 
-    noteEl.textContent =
-      "XAUUSD is streaming from Deriv. " +
-      "The next phase will add structure, " +
-      "liquidity, confirmation and trade logic.";
-
+    ctx.fillText(
+      label,
+      left+index*slot,
+      height-8
+    );
   }
-);
 
+  /* LIVE PRICE */
 
-/* =========================================================
-   RECONNECT
-   ========================================================= */
+  if(lastPrice!==null){
 
-document
-.getElementById("reconnect")
-.addEventListener(
-  "click",
-  connect
-);
+    const py=y(lastPrice);
 
+    if(py>=top && py<=top+chartHeight){
 
-/* =========================================================
-   START
-   ========================================================= */
+      ctx.strokeStyle="#f7c948";
+      ctx.setLineDash([4,4]);
 
-log(
-  "ACE XAU V1 initialized."
-);
+      ctx.beginPath();
+      ctx.moveTo(left,py);
+      ctx.lineTo(left+chartWidth,py);
+      ctx.stroke();
 
-log(
-  "Public Deriv market-data mode."
-);
+      ctx.setLineDash([]);
 
+      ctx.fillStyle="#f7c948";
+      ctx.font="11px Arial";
+      ctx.textAlign="left";
+
+      ctx.fillText(
+        lastPrice.toFixed(2),
+        left+chartWidth+6,
+        py+3
+      );
+    }
+  }
+}
+
+/* TIMEFRAME BUTTONS */
+
+document.querySelectorAll("[data-tf]").forEach(function(button){
+
+  button.addEventListener("click",function(){
+
+    selectedTF = button.dataset.tf;
+
+    $("tfDisplay").textContent = selectedTF;
+
+    document.querySelectorAll("[data-tf]").forEach(function(b){
+      b.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    candles[selectedTF] = [];
+    $("candleCount").textContent = "Loading...";
+    draw();
+    loadHistory();
+
+  });
+});
+
+/* SCAN BUTTON */
+
+$("scan").addEventListener("click",function(){
+
+  const count = candles[selectedTF].length;
+
+  if(!lastPrice || count < 20){
+
+    $("verdict").textContent = "WAITING FOR DATA";
+
+    log("Scan blocked: waiting for market data.");
+
+    return;
+  }
+
+  $("verdict").textContent = "MARKET DATA READY";
+  $("verdict").className = "verdict green";
+
+  $("note").textContent =
+    "ACE has live XAUUSD data and " +
+    count + " " + selectedTF +
+    " historical candles. Analysis logic comes next.";
+
+  log("ACE scan completed.");
+});
+
+/* MANUAL RECONNECT */
+
+$("reconnect").addEventListener("click",function(){
+  reconnectAttempts=0;
+  log("Manual reconnect requested.");
+  connect();
+});
+
+window.addEventListener("resize",draw);
+
+log("ACE XAU V1 starting.");
+log("Historical candle target: 100.");
 connect();
 
-
-window.addEventListener(
-  "resize",
-  draw
-);
-
 </script>
-
 </body>
-  </html>
+                                                           </html>
