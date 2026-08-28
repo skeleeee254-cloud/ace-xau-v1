@@ -513,28 +513,42 @@ function connect(){
   };
 
 
-  socket.onerror = function(){
+  socket.onerror = function(event){
 
-    log(
-      "WebSocket error. Check browser/network."
-    );
+  console.error(
+    "Deriv WebSocket error:",
+    event
+  );
 
-    setOffline();
+  log(
+    "Deriv WebSocket ERROR. " +
+    "Connection failed before market data arrived."
+  );
 
-  };
+  setOffline();
+
+};
 
 
-  socket.onclose = function(){
+  socket.onclose = function(event){
 
-    log(
-      "Deriv WebSocket closed."
-    );
+  const reason =
+    event.reason ||
+    "No reason provided";
 
-    setOffline();
+  log(
+    "Deriv WebSocket CLOSED | " +
+    "Code: " + event.code +
+    " | Clean: " + event.wasClean +
+    " | Reason: " + reason
+  );
 
-  };
+  setOffline();
 
-}
+  statusEl.textContent =
+    "Deriv connection closed";
+
+};
 
 
 /* =========================================================
